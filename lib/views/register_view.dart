@@ -31,56 +31,37 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Demo Application lol"),
-        backgroundColor: Colors.lime,
-      ),
-      body: FutureBuilder(
-          future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform,
-          ),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                return Column(
-                  children: [
-                    TextField(
-                      controller: _email,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration:
-                          const InputDecoration(hintText: "Enter E-mail"),
-                    ),
-                    TextField(
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        controller: _password,
-                        decoration:
-                            const InputDecoration(hintText: "Enter Password")),
-                    TextButton(
-                      onPressed: () async {
-                        final email = _email.text;
-                        final password = _password.text;
-                        try {
-                          final UserCredential = await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                                  email: email, password: password);
-                          print(UserCredential);
-                        } on FirebaseAuthException catch (e) {
-                          Fluttertoast.showToast(msg: e.code);
-                        }
-                      },
-                      child: const Text("Register"),
-                    ),
-                  ],
-                );
-              default:
-                return Text("Loading..");
+    return Column(
+      children: [
+        TextField(
+          controller: _email,
+          enableSuggestions: false,
+          autocorrect: false,
+          keyboardType: TextInputType.emailAddress,
+          decoration: const InputDecoration(hintText: "Enter E-mail"),
+        ),
+        TextField(
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
+            controller: _password,
+            decoration: const InputDecoration(hintText: "Enter Password")),
+        TextButton(
+          onPressed: () async {
+            final email = _email.text;
+            final password = _password.text;
+            try {
+              final UserCredential = await FirebaseAuth.instance
+                  .createUserWithEmailAndPassword(
+                      email: email, password: password);
+              print(UserCredential);
+            } on FirebaseAuthException catch (e) {
+              Fluttertoast.showToast(msg: e.code);
             }
-          }),
+          },
+          child: const Text("Register"),
+        ),
+      ],
     );
   }
 }
