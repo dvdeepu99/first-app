@@ -31,37 +31,49 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          controller: _email,
-          enableSuggestions: false,
-          autocorrect: false,
-          keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(hintText: "Enter E-mail"),
-        ),
-        TextField(
-            obscureText: true,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Register"),
+        backgroundColor: Colors.lime,
+      ),
+      body: Column(
+        children: [
+          TextField(
+            controller: _email,
             enableSuggestions: false,
             autocorrect: false,
-            controller: _password,
-            decoration: const InputDecoration(hintText: "Enter Password")),
-        TextButton(
-          onPressed: () async {
-            final email = _email.text;
-            final password = _password.text;
-            try {
-              final UserCredential = await FirebaseAuth.instance
-                  .createUserWithEmailAndPassword(
-                      email: email, password: password);
-              print(UserCredential);
-            } on FirebaseAuthException catch (e) {
-              Fluttertoast.showToast(msg: e.code);
-            }
-          },
-          child: const Text("Register"),
-        ),
-      ],
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(hintText: "Enter E-mail"),
+          ),
+          TextField(
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              controller: _password,
+              decoration: const InputDecoration(hintText: "Enter Password")),
+          TextButton(
+            onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
+              try {
+                final UserCredential = await FirebaseAuth.instance
+                    .createUserWithEmailAndPassword(
+                        email: email, password: password);
+                print(UserCredential);
+              } on FirebaseAuthException catch (e) {
+                Fluttertoast.showToast(msg: e.code);
+              }
+            },
+            child: const Text("Register"),
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/login/', (route) => false);
+              },
+              child: Text("Already Registered? Login here"))
+        ],
+      ),
     );
   }
 }

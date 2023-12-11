@@ -31,36 +31,49 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          controller: _email,
-          enableSuggestions: false,
-          autocorrect: false,
-          keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(hintText: "Enter E-mail"),
-        ),
-        TextField(
-            obscureText: true,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Log in"),
+        backgroundColor: Colors.lime,
+      ),
+      body: Column(
+        children: [
+          TextField(
+            controller: _email,
             enableSuggestions: false,
             autocorrect: false,
-            controller: _password,
-            decoration: const InputDecoration(hintText: "Enter Password")),
-        TextButton(
-          onPressed: () async {
-            final email = _email.text;
-            final password = _password.text;
-            try {
-              final UserCredential = await FirebaseAuth.instance
-                  .signInWithEmailAndPassword(email: email, password: password);
-              print(UserCredential);
-            } on FirebaseAuthException catch (e) {
-              Fluttertoast.showToast(msg: e.code);
-            }
-          },
-          child: const Text("Log in"),
-        ),
-      ],
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(hintText: "Enter E-mail"),
+          ),
+          TextField(
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              controller: _password,
+              decoration: const InputDecoration(hintText: "Enter Password")),
+          TextButton(
+            onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
+              try {
+                final UserCredential = await FirebaseAuth.instance
+                    .signInWithEmailAndPassword(
+                        email: email, password: password);
+                print(UserCredential);
+              } on FirebaseAuthException catch (e) {
+                Fluttertoast.showToast(msg: e.code);
+              }
+            },
+            child: const Text("Log in"),
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/register/', (route) => false);
+              },
+              child: Text("Not Registered yet? Register here"))
+        ],
+      ),
     );
   }
 }
