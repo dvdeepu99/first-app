@@ -56,10 +56,12 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                final UserCredential = await FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                        email: email, password: password);
-                print(UserCredential);
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: email, password: password);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/notes/',
+                  (route) => false,
+                );
               } on FirebaseAuthException catch (e) {
                 Fluttertoast.showToast(msg: e.code);
               }
