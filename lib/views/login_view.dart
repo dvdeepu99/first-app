@@ -35,7 +35,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Log in"),
+        title: const Text("Log in"),
         backgroundColor: Colors.lime,
       ),
       body: Column(
@@ -73,6 +73,8 @@ class _LoginViewState extends State<LoginView> {
                 }
               } on FirebaseAuthException catch (e) {
                 Fluttertoast.showToast(msg: e.code);
+              } catch (e) {
+                Fluttertoast.showToast(msg: e.toString());
               }
             },
             child: const Text("Log in"),
