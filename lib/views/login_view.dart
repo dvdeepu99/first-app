@@ -72,7 +72,11 @@ class _LoginViewState extends State<LoginView> {
                   );
                 }
               } on FirebaseAuthException catch (e) {
-                Fluttertoast.showToast(msg: e.code);
+                if (email == '' || password == '') {
+                  Fluttertoast.showToast(msg: "Empty field(s)");
+                } else {
+                  Fluttertoast.showToast(msg: e.code);
+                }
               } catch (e) {
                 Fluttertoast.showToast(msg: e.toString());
               }
