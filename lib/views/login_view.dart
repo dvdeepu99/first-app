@@ -1,8 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firstapp/constants/routes.dart';
-import 'package:firstapp/firebase_options.dart';
-import 'package:firstapp/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
